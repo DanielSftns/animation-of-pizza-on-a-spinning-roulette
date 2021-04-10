@@ -1,0 +1,171 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    max-width: 1000px;
+    width: 100%;
+    padding: 40px;
+    display: grid;
+    gap: 4em 2em;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-areas: 'sketch info' 'timeline timeline';
+    align-items: center;
+}
+#animation_pizza{
+    grid-area: sketch;
+}
+.container .info{
+    grid-area: info;
+    text-align: center;
+}
+.container .info img{
+    width: 80%;
+    margin-bottom: 1em;
+}
+.container .info .number_active{
+    width: 2em;
+    height: 2em;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-bottom: 1em;
+}
+.container .info .number_active.slice1{
+    background-image: url('./img/N1.png');            
+}
+.container .info .number_active.slice2{
+    background-image: url('./img/N2.png');            
+}
+.container .info .number_active.slice2{
+    background-image: url('./img/N2.png');            
+}
+.container .info .number_active.slice3{
+    background-image: url('./img/N3.png');            
+}
+.container .info .number_active.slice4{
+    background-image: url('./img/N4.png');            
+}
+.container .info .number_active.slice5{
+    background-image: url('./img/N5.png');            
+}
+.container .info .number_active.slice6{
+    background-image: url('./img/N6.png');            
+}
+.container .info .number_active.slice7{
+    background-image: url('./img/N7.png');            
+}
+.container .info .number_active.slice8{
+    background-image: url('./img/N8.png');            
+}
+
+.container .info .title{
+    font-family: 'Corben', cursive;
+    font-weight: 400;
+    color: #ed2024;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+}
+.container .info .description{
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    line-height: 1.4em;
+}
+
+.container .timeline{
+    --columns: 4;
+    position: relative;
+    grid-area: timeline;
+}
+.container .timeline .items{
+    width: 100%;
+    display: grid;
+    grid-auto-columns: calc(100% / var(--columns));
+    grid-auto-flow: column;
+    overflow: hidden;
+    text-align: center;
+}
+
+.container .timeline .item{
+    padding-top: 20px;
+    border-top: 2px solid #ccc;
+    position: relative;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+    font-family: 'Corben', cursive;
+    font-weight: 400;
+    color: #808184;
+    font-size: 16px;
+}
+.container .timeline .item.active,
+.container .timeline .item:hover{
+    color: #231f20;
+}
+
+.container .timeline .item::after{
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #ed2024;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    left: calc(50% - 5px);
+    top: -5px;
+    transition: transform 0.5s;
+}
+
+.container .timeline .item.active::after{
+    transform: scale(2);
+}
+
+.container .arrow{
+    width: 10px; 
+    height: 10px; 
+    background-color: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 1px;
+    cursor: pointer;
+} 
+
+.container .arrow-left {
+    left: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right: 10px solid #ccc; 
+}
+.container .arrow-right {
+    right: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ccc;
+}
+
+@media only screen and (max-width: 600px) {
+    .container{
+        width: 100%;
+        gap: 3em;
+        grid-template-columns: 1fr;
+        grid-template-areas: 'sketch' 'info' 'timeline';
+        align-items: center;
+        justify-items: center;
+    }
+    #animation_pizza{
+        width: 90%;
+    }
+    .container .info{
+        width: 50%;
+    }
+}
