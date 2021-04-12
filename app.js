@@ -140,14 +140,14 @@ function select(slice){
     }
 
     animationPizza.querySelector(`#slice${current}_disable`).beginElement();
+    current = slice
+    changeInfo()
     setTimeout(()=> {
-        current = slice
         gsap.to(animationPizza, duration, {
             rotation: `${rotate}_cw`,
             onComplete: ()=> {
                 animationPizza.querySelector(`#slice${slice}`).beginElement();
                 animationPizza.querySelector(`.slice.slice${slice}`).classList.add('active')
-                changeInfo()
             }
         });
         numbers_slices.forEach(number_slice=>{
