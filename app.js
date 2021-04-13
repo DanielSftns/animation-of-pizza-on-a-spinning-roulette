@@ -7,6 +7,7 @@ const items = container.querySelectorAll('.timeline .item')
 const deg = 360 / 8
 let current = 1
 let prev = 1
+let animationRunning = false
 
 let pizzas = [
     {
@@ -76,6 +77,7 @@ function selectPrevSlice(){
 }
 
 function activeItem(item){
+    if(animationRunning) return
     container.querySelector('.item.active').classList.remove('active')
     item.classList.add('active')
     const slice = parseInt(item.dataset.slice)
@@ -115,7 +117,8 @@ function changeInfo(){
 }
 
 function select(slice){
-    if(current == slice) return
+    if(current == slice || animationRunning) return
+    animationRunning = true
     animationPizza.querySelector('.slice.active').classList.remove('active')
     let position = 0
     prev = current
@@ -166,6 +169,9 @@ function select(slice){
             ease: "power3.out",
             onComplete: ()=> {
                 animationPizza.querySelector(`#slice${slice}`).beginElement();
+                setTimeout(()=> {
+                    animationRunning = false
+                }, 500)
             }
         });
         numbers_slices.forEach(number_slice=>{
