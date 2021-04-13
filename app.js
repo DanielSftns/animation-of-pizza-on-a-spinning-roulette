@@ -12,42 +12,50 @@ let pizzas = [
     {
         number: 1,
         title: 'Let’s start with why Pizza is Perfect.',
-        description: 'It is seen as superior to many of it’s fast food competitors, like burgers or tacos. Pizza is a balanced nutritional slice of food group harmony. Perfect Pizza is like a skilled conductor.'
+        description: 'It is seen as superior to many of it’s fast food competitors, like burgers or tacos. Pizza is a balanced nutritional slice of food group harmony. Perfect Pizza is like a skilled conductor.',
+        img_src: './img/pizza1.png'
     },
     {
         number: 2,
         title: 'Superior dough for your dough',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     },
     {
         number: 3,
         title: 'A real crust-pleaser',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     },
     {
         number: 4,
         title: 'Fresh ingredients',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     },
     {
         number: 5,
         title: 'Title 5',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     },
     {
         number: 6,
         title: 'Title 6',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     },
     {
         number: 7,
         title: 'Title 7',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     },
     {
         number: 8,
         title: 'Title 8',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!'
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quidem et totam culpa exercitationem, tenetur debitis. Velit accusamus delectus in explicabo dicta! Labore nisi quos praesentium! Ducimus corporis molestias cumque!',
+        img_src: './img/pizza1.png'
     }
 ]
 
@@ -103,18 +111,26 @@ function changeInfo(){
     container.querySelector('.number_active').classList.replace(`slice${prev}`,`slice${current}`)
     container.querySelector('.title').textContent = pizzas[current-1].title
     container.querySelector('.description').textContent = pizzas[current-1].description
+    container.querySelector('img').setAttribute('src',pizzas[current-1].img_src)
 }
 
 function select(slice){
     if(current == slice) return
     animationPizza.querySelector('.slice.active').classList.remove('active')
-    let duration = 0
+    let position = 0
     prev = current
+    
     if(slice > current){
-        duration = 8 - (slice - current)
+        position = 8 - (slice - current)
     }else{
-        duration = current - slice
+        position = current - slice
     }
+
+    let duration = position
+    if(position > 4){
+        duration = 8 - position
+    }
+
     duration = duration * 0.8
     let rotate = 360 - (slice * deg) + deg
     
@@ -140,19 +156,22 @@ function select(slice){
     }
 
     animationPizza.querySelector(`#slice${current}_disable`).beginElement();
+    const direction = position > 4 ? '_ccw': '_cw' 
     current = slice
     changeInfo()
+    animationPizza.querySelector(`.slice.slice${slice}`).classList.add('active')
     setTimeout(()=> {
         gsap.to(animationPizza, duration, {
-            rotation: `${rotate}_cw`,
+            rotation: `${rotate}${direction}`,
+            ease: "power3.out",
             onComplete: ()=> {
                 animationPizza.querySelector(`#slice${slice}`).beginElement();
-                animationPizza.querySelector(`.slice.slice${slice}`).classList.add('active')
             }
         });
         numbers_slices.forEach(number_slice=>{
             gsap.to(number_slice, duration, {
-                rotation: `-${rotate}_ccw`
+                rotation: `-${rotate}${position > 4 ? '_cw': '_ccw'}`,
+                ease: "power3.out"
             });
         })
     }, 500)
